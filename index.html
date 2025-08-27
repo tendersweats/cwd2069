@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BeatMaker Pro</title>
+  <link rel="manifest" href="manifest.json">
+  <script src="app.js" defer></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>🎵 BeatMaker Pro</h1>
+
+  <h2>Sequencer</h2>
+  <div id="sequencer"></div>
+  <button onclick="startSequencer()">▶️ Play</button>
+  <button onclick="stopSequencer()">⏹ Stop</button>
+
+  <h2>Live Pads</h2>
+  <div id="pads">
+    <button onclick="playSample('sounds/kick.wav','kick')">Kick</button>
+    <button onclick="playSample('sounds/snare.wav','snare')">Snare</button>
+    <button onclick="playSample('sounds/hihat.wav','hihat')">Hi-Hat</button>
+    <button onclick="playSample('sounds/clap.wav','clap')">Clap</button>
+    <button onclick="playSample('sounds/tom.wav','tom')">Tom</button>
+  </div>
+
+  <h2>Mixer</h2>
+  <div id="mixer"></div>
+
+  <script>
+    const steps = 16;
+    const tracks = ["kick","snare","hihat","clap","tom"];
+    const sequencer = document.getElementById("sequencer");
+    tracks.forEach(track => {
+      const row = document.createElement("div");
+      row.innerHTML = track.toUpperCase() + ": ";
+      for (let i = 0; i < steps; i++) {
+        const cell = document.createElement("button");
+        cell.id = track + i;
+        cell.className = "step";
+        cell.onclick = () => toggleStep(track, i);
+        row.appendChild(cell);
+      }
+      sequencer.appendChild(row);
+    });
+
+    // Mixer UI
+    const mixerDiv = document.getElementById("mixer");
+    tracks.forEach(track => {
+      const row = document.createElement("div");
+      row.innerHTML = track.toUpperCase() + " ";
+      const vol = document.createElement("input");
+      vol.type = "range"; vol.min = 0; vol.max = 1; vol.step = 0.01; vol.value = 1;
+      vol.oninput = (e) => setVolume(track, e.target.value);
+      const muteBtn = document.createElement("button");
+      muteBtn.innerText = "Mute";
+      muteBtn.onclick = () => toggleMute(track);
+      const soloBtn = document.createElement("button");
+      soloBtn.innerText = "Solo";
+      soloBtn.onclick = () => toggleSolo(track);
+      row.appendChild(vol);
+      row.appendChild(muteBtn);
+      row.appendChild(soloBtn);
+      mixerDiv.appendChild(row);
+    });
+  </script>
+</body>
+</html>

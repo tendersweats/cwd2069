@@ -1,0 +1,29 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #121212;
+  color: white;
+  text-align: center;
+}
+#pads button, .step, button {
+  margin: 5px;
+  padding: 10px;
+  font-size: 12px;
+  background: #333;
+  border: 1px solid #555;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+button:hover {
+  opacity: 0.8;
+}
+#sequencer {
+  display: inline-block;
+  margin-bottom: 20px;
+}
+input[type=range] {
+  width: 100px;
+}
+div {
+  margin: 5px 0;
+}
